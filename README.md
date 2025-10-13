@@ -66,12 +66,11 @@
   - 모터 제어: Dynamixel SDK, PWM Servo Control, DXL Protocol 1.0 / 2.0
   - 컨트롤러 App: Kotlin, WebView, UDP Socket API
   - 컨트롤러 서버: FastAPI, Socket/UDP 통신
- 
-##  팀원 소개
-| <img src="https://github.com/user-attachments/assets/8e5e423b-1111-4a3c-b9aa-07b2a408f16d" width="120"/> | <img src="https://github.com/user-attachments/assets/f416b168-266b-4240-b8c1-e7dfd30d3414" width="120"/> | <img src="https://github.com/user-attachments/assets/60e12eac-3b9f-4781-8b41-2ab1d0c19d86" width="120"/> | <img src="https://github.com/user-attachments/assets/26db2e23-494c-41e0-a326-225555ba5bcf" width="120"/> | <img src="img/kpm.png" width="120"/> | 
-|:--:|:--:|:--:|:--:|:--:|
-| **권성진** <br> • 회로도 설계 및 구현 <br> • DXL Protocol 1.0 / 2.0 분리 제어 개발 <br> • Wheel-Mode 모터 제어 <br> • STM32 펌웨어 개발 <br> • 멘토와의 일정 조율 주도 | **김환희** <br> • ROS2 노드 및 소프트웨어 개발 <br> • Micro-ROS 통신 및 제어 로직 구현 <br> • STM32 펌웨어 개발 및 연동 <br> • 컨트롤러 앱 / 서버 개발 <br> • 장애물 회피 및 단차 인식 알고리즘 개발 <br> • LEG 모터 제어 | **김찬희** <br> • 로봇 몸체 설계 및 출력 <br> • 다리 구조 역기구학 계산 <br> • 시뮬레이션 및 보행 검증 <br> • 협업을 위한 Notion 플랫폼 구현| **박태영** <br> • 로봇 외형 및 프레임 설계 <br> • 하드웨어 출력 및 조립 <br> • 문서 작성 및 데이터 정리 | **김평무** <br> • 프로젝트 멘토링 <br> • 기술 자문 <br> • 현업 트렌드 기반 개선 방향 제시 <br> • 현실적인 해결방안 제시|
 
+##  팀원 소개
+| <img src = "https://github.com/user-attachments/assets/a7a112ba-ef1f-4389-a5e3-88b4177cd51b" width="120"/> | <img src="https://github.com/user-attachments/assets/f416b168-266b-4240-b8c1-e7dfd30d3414" width="120"/> | <img src="https://github.com/user-attachments/assets/60e12eac-3b9f-4781-8b41-2ab1d0c19d86" width="120"/> | <img src="https://github.com/user-attachments/assets/26db2e23-494c-41e0-a326-225555ba5bcf" width="120"/> | <img src = "https://github.com/user-attachments/assets/f30c891d-1910-4e85-a21a-a62c733c3a0a" width="120"/> | 
+|:--:|:--:|:--:|:--:|:--:|
+| **권성진** <br> • 회로도 설계 및 구현 <br> • DXL Protocol 1.0 / 2.0 분리 제어 개발 <br> • Wheel-Mode 모터 제어 <br> • STM32 펌웨어 개발 <br> • 멘토와의 일정 조율 주도 | **김환희** <br> • ROS2 노드 및 소프트웨어 개발 <br> • Micro-ROS 통신 및 제어 로직 구현 <br> • STM32 펌웨어 개발 및 연동 <br> • 컨트롤러 앱 / 서버 개발 <br> • 장애물 회피 및 단차 인식 알고리즘 개발 <br> • LEG 모터 제어 | **김찬희** <br> • 로봇 몸체 설계 및 출력 <br> • 다리 구조 역기구학 계산 <br> • 시뮬레이션 및 보행 검증 <br> • 협업을 위한 Notion 플랫폼 구현| **박태영** <br> • 로봇 외형 및 프레임 설계 <br> • 하드웨어 출력 및 조립 <br> • 문서 작성 및 데이터 정리 | **김평무** <br> • 프로젝트 총괄 멘토링 및 기술 방향성 자문 <br> • 하드웨어·소프트웨어 구조 전반에 대한 기술 검토 및 피드백 제공 <br> • 현업 트렌드 기반 개선 방향 제시 <br> • 개발 일정·리스크 관리에 대한 현실적 솔루션 제안
 ## 시스템 구상도
  서비스 구상도
  <img width="1130" height="535" alt="서비스 구상도" src="https://github.com/user-attachments/assets/513494b5-15bf-483b-b9e4-72b27f5efd22" />
