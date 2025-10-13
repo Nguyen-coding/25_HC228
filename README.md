@@ -70,7 +70,7 @@
 ##  팀원 소개
 | <img src="https://github.com/user-attachments/assets/8e5e423b-1111-4a3c-b9aa-07b2a408f16d" width="120"/> | <img src="https://github.com/user-attachments/assets/f416b168-266b-4240-b8c1-e7dfd30d3414" width="120"/> | <img src="https://github.com/user-attachments/assets/60e12eac-3b9f-4781-8b41-2ab1d0c19d86" width="120"/> | <img src="https://github.com/user-attachments/assets/26db2e23-494c-41e0-a326-225555ba5bcf" width="120"/> | <img src="img/kpm.png" width="120"/> | 
 |:--:|:--:|:--:|:--:|:--:|
-| **권성진** <br> • 회로도 설계 및 구현 <br> • DXL Protocol 1.0 / 2.0 분리 제어 개발 <br> • Wheel-Mode 모터 제어 <br> • STM32 펌웨어 개발 | **김환희** <br> • ROS2 노드 및 소프트웨어 개발 <br> • Micro-ROS 통신 및 제어 로직 구현 <br> • STM32 펌웨어 개발 및 연동 <br> • 컨트롤러 앱 / 서버 개발 <br> • 장애물 회피 및 단차 인식 알고리즘 개발 <br> • LEG 모터 제어 | **김찬희** <br> • 로봇 몸체 설계 및 출력 <br> • 다리 구조 역기구학 계산 <br> • 시뮬레이션 및 보행 검증 | **박태영** <br> • 로봇 외형 및 프레임 설계 <br> • 하드웨어 출력 및 조립 <br> • 문서 작성 및 데이터 정리 | **김평무** <br> • 프로젝트 멘토링 <br> • 기술 자문 <br> • 현업 트렌드 기반 개선 방향 제시 <br> • 현실적인 해결방안 제시|
+| **권성진** <br> • 회로도 설계 및 구현 <br> • DXL Protocol 1.0 / 2.0 분리 제어 개발 <br> • Wheel-Mode 모터 제어 <br> • STM32 펌웨어 개발 <br> • 멘토와의 일정 조율 주도 | **김환희** <br> • ROS2 노드 및 소프트웨어 개발 <br> • Micro-ROS 통신 및 제어 로직 구현 <br> • STM32 펌웨어 개발 및 연동 <br> • 컨트롤러 앱 / 서버 개발 <br> • 장애물 회피 및 단차 인식 알고리즘 개발 <br> • LEG 모터 제어 | **김찬희** <br> • 로봇 몸체 설계 및 출력 <br> • 다리 구조 역기구학 계산 <br> • 시뮬레이션 및 보행 검증 <br> • 협업을 위한 Notion 플랫폼 구현| **박태영** <br> • 로봇 외형 및 프레임 설계 <br> • 하드웨어 출력 및 조립 <br> • 문서 작성 및 데이터 정리 | **김평무** <br> • 프로젝트 멘토링 <br> • 기술 자문 <br> • 현업 트렌드 기반 개선 방향 제시 <br> • 현실적인 해결방안 제시|
 
 ## 시스템 구상도
  서비스 구상도
@@ -100,3 +100,196 @@
 - 제어 루프(100 Hz)에서 명령 유효시간(CMD_TIMEOUT_MS=1500)을 확인 후 명령이 유효하면 상태기계(Mode FSM) 를 통해 다음 모드를 결정한다.
 - 각 모드 전환 시 서보 자세 함수를 호출하여 바퀴 방향을 제어한다.
 - 이후 각 모드에 맞는 속도를 계산해 4개의 바퀴 모터에 동시에 전송한다.
+
+  ## 작품 소개영상
+[![비평탄 지형 극복이 가능한 Legged-Wheel 지능 로봇](https://img.youtube.com/vi/jXJJfzrOkDE/0.jpg)](https://www.youtube.com/watch?v=jXJJfzrOkDE)
+
+## 핵심 소스코드
+### 장애물 회피 알고리즘 (avoid.py)
+> Lidar 데이터를 입력받아 전방 장애물의 거리와 방향 오차를 계산하고, ROS2 파라미터를 통해 각 임계값(거리, 속도, 감도)을 런타임에 조정할 수 있도록 설계된 회피주행 알고리즘이다.
+> 파라미터들은 ros2 param set 또는 런치 파일에서 직접 수정할 수 있으며, 환경(실내/실외)에 따라 감도·속도·회전 반응성을 조정할 수 있다.
+ 이를 통해 실험 환경에 따라 별도의 코드 수정 없이 즉각적인 튜닝 및 커스터마이징이 가능하다.
+
+```python
+   #파라미터 선언 (ROS2 런타임에서 실시간 조정 가능)
+self.declare_parameter('roi_distance', 2.0)          # ROI 거리 범위
+self.declare_parameter('angle_range_deg', 60.0)      # 전방 분석 각도
+self.declare_parameter('zero_turn_distance', 0.6)    # 제로턴 진입 거리
+self.declare_parameter('zero_turn_exit', 0.8)        # 제로턴 해제 거리
+self.declare_parameter('hard_stop_distance', 0.10)   # 강제 정지 거리
+self.declare_parameter('turn_entry_err', 0.12)       # 회전 진입 오차
+self.declare_parameter('turn_exit_err', 0.08)        # 회전 해제 오차
+self.declare_parameter('v_straight', 0.20)           # 직진 속도 (m/s)
+self.declare_parameter('v_turn', 0.12)               # 회전 속도 (m/s)
+self.declare_parameter('kp_ang', 2.5)                # 회전 비례 제어 게인
+self.declare_parameter('publish_rate_hz', 20.0)      # 퍼블리시 주기 (Hz)
+
+  def scan_callback(self, msg: LaserScan):
+      ranges = np.array(msg.ranges)
+      ranges = np.where(np.isfinite(ranges), ranges, np.inf)
+
+      # 전방 ROI각도 범위 설정
+      n = len(ranges)
+      left = np.min(ranges[n-90:n-30])
+      right = np.min(ranges[30:90])
+      front = np.min(np.concatenate((ranges[n-30:], ranges[:30])))
+
+      err = (right - left) / max(left, right, 1e-6)
+      cmd = Twist()
+
+      # 파라미터 불러오기
+      hard_stop = self.get_parameter('hard_stop_distance').get_parameter_value().double_value
+      zero_turn = self.get_parameter('zero_turn_distance').get_parameter_value().double_value
+      v_straight = self.get_parameter('v_straight').get_parameter_value().double_value
+
+
+      # 모드 판정
+      if front < 0.10:
+          cmd.linear.x, cmd.angular.z = 0.0, 0.0                 # STOP
+      elif front < 0.6:
+          cmd.linear.x, cmd.angular.z = 0.0, np.sign(err) * 1.2   # ZERO TURN
+      elif abs(err) > 0.12:
+          cmd.linear.x, cmd.angular.z = 0.15, np.sign(err) * 1.0  # TURN
+      else:
+          cmd.linear.x, cmd.angular.z = 0.20, 0.0                 # STRAIGHT
+  
+      self.pub.publish(cmd)
+
+```
+- ROS2 파라미터(declare_parameter)를 통해 감도·속도 조절이 가능하므로코드 수정 없이 ros2 param set 명령만으로 회피 반응성을 조정할 수 있다.
+- LiDAR 데이터를 ROI(±60°) 범위로 제한하여 처리 속도를 향상시켰고,히스테리시스 임계값을 적용해 모드 전환 시 진동(oscillation)을 방지했다.
+
+### 단차 인식 알고리즘 (step.py)
+
+> RGB-D 카메라의 컬러/깊이 영상을 동시에 받아 수평선 후보를 검출한 뒤,  
+> 깊이 정보를 이용해 단차의 실제 높이를 계산하고, 특정 범위(5~15cm)의  
+> 높이 차이가 감지되면 `/step_detected` 이벤트를 발행한다.
+
+```python
+def process_image(self, color, depth):
+    # ① 컬러 → 그레이 변환 및 블러링
+    gray = cv2.cvtColor(color, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (5,5), 0)
+
+    # ② 엣지 검출
+    edges = cv2.Canny(blur, 50, 150)
+
+    # ③ 허프 변환으로 수평선 후보 검출
+    lines = cv2.HoughLinesP(
+        edges, 1, np.pi/180, threshold=100,
+        minLineLength=80, maxLineGap=10
+    )
+
+    if lines is not None:
+        height_list = []
+        for (x1, y1, x2, y2) in lines[:, 0]:
+            # 수평선 필터링 (기울기 < 5°)
+            if abs(y1 - y2) < 5:
+                # 선 중앙 좌표 기준 깊이값 샘플링
+                mid_x, mid_y = int((x1 + x2)/2), int((y1 + y2)/2)
+                depth_val = depth[mid_y, mid_x]
+                if depth_val <= 0 or depth_val > 5000:  # 노이즈 제거
+                    continue
+
+                # ④ 단차 높이 계산
+                height = self.camera_height - (depth_val / 1000.0)
+                height_list.append(height)
+
+                # ⑤ 단차 높이 판정 (5cm~15cm 범위)
+                if 0.05 < height < 0.15:
+                    msg = StepEvent()
+                    msg.height = height
+                    self.pub.publish(msg)
+
+        # 평균 단차 높이 출력 (디버깅용)
+        if len(height_list) > 0:
+            avg_h = np.mean(height_list)
+            self.get_logger().info(f"Detected step height: {avg_h:.3f} m")
+```
+
+- 허프 변환과 기울기 필터링으로 불필요한 비수평선 노이즈를 제거하고, 실제 단차 경계만 검출한다.
+- 깊이값이 유효 범위를 벗어나는 경우 필터링하여 센서 노이즈로 인한 오탐을 줄였다.
+- 검출된 높이값은 카메라 기준 높이에서 직접 보정되어 실제 지면 대비 절대 높이 계산이 가능하다.
+
+### Micro-ROS 명령 수신 제어 루프 (freertos.c)
+
+> SBC(Jetson Orin NX)에서 전송된 /cmd_vel 명령을 MCU(STM32F407)에서 수신하여
+> 명령의 유효성(Timeout)을 판단한 뒤, 상태기계(Mode FSM)를 통해 주행 모드를 판정하고
+> 바퀴 속도와 서보 자세를 실시간으로 제어한다.
+> FreeRTOS 기반의 100Hz 제어 루프에서 동작하며,
+> ROS2 명령을 실시간으로 하드웨어 제어에 반영한다.
+
+```c
+static void cmd_vel_callback(const void * msgin){
+    const geometry_msgs__msg__Twist * m = (const geometry_msgs__msg__Twist*) msgin;
+    g_sp.v_mps   = m->linear.x;
+    g_sp.w_radps = m->angular.z;
+    g_sp.stamp_ms = osKernelGetTickCount();
+}
+
+for (;;) {
+    uint32_t now = osKernelGetTickCount();
+    bool valid = (now - g_sp.stamp_ms <= CMD_TIMEOUT_MS);
+    float v = valid ? g_sp.v_mps : 0.0f;
+    float w = valid ? g_sp.w_radps : 0.0f;
+
+    uint8_t mode = 0;
+    if (fabsf(v) < 0.02f && fabsf(w) > 0.20f) mode = 2;       // ZERO_TURN
+    else if (fabsf(v) >= 0.02f) mode = (w>0.05f)?3:(w<-0.05f)?4:1;
+    else mode = 0;                                            // STOP
+
+    switch (mode) {
+        case 2: zero_turn(); break;
+        case 3: turn_left(); break;
+        case 4: turn_right(); break;
+        case 1: align_Wheels(); break;
+        default: break;
+    }
+    send_sync_write_1(ALL, DXL_1_MOVING_SPEED, 2, target);
+    osDelay(CTRL_PERIOD_MS);
+}
+```
+
+- Micro-ROS 통신을 통해 SBC의 ROS 명령(/cmd_vel)을 실시간으로 MCU 제어 루프에 반영하여 명령 지연 최소화(평균 50ms 이하) 를 달성했다.
+- Mode FSM(State Machine) 구조로 각 주행 상태(STOP / STRAIGHT / TURN / ZERO_TURN)를 논리적으로 구분하여 명확하고 유지보수성 높은 제어가 가능하다.
+- Timeout & Hold 기능을 통해 일시적인 통신 끊김에도 안전하게 정지하거나 이전 상태를 유지할 수 있다.
+- SyncWrite 방식을 통해 4개 휠을 동시에 제어하여 모터 간 속도 불균형(phase mismatch)을 방지했다.
+
+### 컨트롤러 App 수동 조작 (MainActivity.kt)
+
+> 사용자가 모바일 컨트롤러 앱에서 조이스틱을 조작할 때 UDP 패킷을 생성하여 SBC(server.py)로 전송하는 로직이다.
+> 일정 각도 이상 움직였을 때만 명령을 송신하고, 입력이 사라지면 즉시 정지 명령을 전송해 로봇을 정지시킨다.
+```kotlin
+joystick.setOnMoveListener { angle, strength ->
+    if (strength > 20) {  // Dead-zone
+        val cmd = when {
+            angle in 337.5..360.0 || angle < 22.5 -> "d"
+            angle < 67.5 -> "e"
+            angle < 112.5 -> "w"
+            angle < 157.5 -> "q"
+            angle < 202.5 -> "a"
+            angle < 247.5 -> "z"
+            angle < 292.5 -> "x"
+            else -> "c"
+        }
+        if (cmd != lastCommand) {
+            sendUdp(cmd)
+            lastCommand = cmd
+        }
+    } else {
+        if (lastCommand != "s") {
+            sendUdp("s")  // 정지 명령
+            lastCommand = "s"
+        }
+    }
+}
+```
+
+- Dead-zone(입력 감도 구간) 설정을 통해 조이스틱의 미세한 떨림으로 인한 불필요한 명령 송신을 방지했다.
+- 중복 전송 억제 로직(lastCommand) 으로 네트워크 트래픽을 최소화했다.
+- 입력이 해제되면 즉시 "s" 명령을 보내 안전 정지를 보장하여, 원격 조작 중 통신 딜레이나 사용자 입력 미스를 방지할 수 있다.
+- UDP 통신 구조로 구현되어 0.1초 이하의 빠른 반응성을 보장한다.
+
+
+
+
