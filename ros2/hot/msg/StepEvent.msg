@@ -1,0 +1,1 @@
+float32 height  # 단차 높이 (m)

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- IP 입력을 위한 EditText -->
+
+
+    <!-- 결과를 보여줄 TextView -->
+
+    <Switch
+        android:id="@+id/AutoMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text="Auto Mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.784"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/joystickLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextIpPort"
+        android:layout_width="192dp"
+        android:layout_height="42dp"
+        android:background="#FFFFFF"
+        android:hint="IP:Port"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnShowInput"
+        app:layout_constraintHorizontal_bias="0.016"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
+
+    <EditText
+        android:id="@+id/webport"
+        android:layout_width="100dp"
+        android:layout_height="42dp"
+        android:background="#FFFFFF"
+        android:hint="Port"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/port2"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toEndOf="@+id/editTextIpPort"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="472dp"
+        android:layout_height="227dp"
+        android:layout_marginTop="42dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.352">
+
+
+    </WebView>
+
+    <Button
+        android:id="@+id/btnShowInput"
+        android:layout_width="104dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="612dp"
+        android:text="IP/Port"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/port2"
+        android:layout_width="104dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="612dp"
+        android:text="Video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnShowInput" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- 버튼을 그룹화한 레이아웃 -->
+
+    <!-- 추가적인 레그 버튼 그룹 -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonGroup2"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/webView"
+        app:layout_constraintTop_toBottomOf="@+id/buttonGroupAll3">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Angle"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button1"
+            android:text="@string/Angle"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/Leg4"
+            tools:layout_editor_absoluteY="1dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Leg4"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button1"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/leg4"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/Leg3"
+            app:layout_constraintEnd_toStartOf="@+id/Angle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Leg3"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:background="@drawable/button1"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/leg3"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/Leg2"
+            app:layout_constraintTop_toBottomOf="@+id/Leg4" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Leg2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="1dp"
+            android:background="@drawable/button1"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/leg2"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@+id/Leg3"
+            app:layout_constraintTop_toBottomOf="@+id/Angle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buttonGroupAll3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGroup2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/webView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- All 버튼 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/All"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/button1"
+            android:text="@string/All"
+
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/Torque"
+            app:layout_constraintEnd_toStartOf="@+id/Angle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Angle 버튼 -->
+
+        <!-- Torque 버튼 -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Torque"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button1"
+            android:text="@string/Torque"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/All" />
+
+        <!-- Stop 버튼 -->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Stop"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button1"
+            android:text="@string/Stop"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/Leg1"
+            app:layout_constraintStart_toEndOf="@id/Torque"
+            app:layout_constraintTop_toBottomOf="@id/Angle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/Leg1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/button1"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="@string/leg1"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@+id/Torque"
+            app:layout_constraintTop_toBottomOf="@+id/Stop" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.example.myapplication4.JoystickView
+        android:id="@+id/joystickView"
+        android:layout_width="169dp"
+        android:layout_height="177dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="216dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- activity_main.xml 또는 fragment XML 등 -->
+    <Switch
+        android:id="@+id/switchCrab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text="Crab Mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.577"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

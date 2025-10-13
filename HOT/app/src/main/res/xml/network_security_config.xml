@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- 또는 특정 IP를 허용하려면 아래처럼 -->
+        <domain includeSubdomains="true">172.17.154.28</domain>
+        <domain includeSubdomains="true">172.17.155.114</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">192.168.1.8</domain>
+        <domain includeSubdomains="true">192.168.70.172</domain>
+        <domain includeSubdomains="true">192.168.1.104</domain>
+        <domain includeSubdomains="true">172.17.155.46</domain>
+        <domain includeSubdomains="true">172.20.10.3</domain>
+        <domain includeSubdomains="true">172.20.10.2</domain>
+        <domain includeSubdomains="true">172.17.152.149</domain>
+
+
+    </domain-config>
+</network-security-config>

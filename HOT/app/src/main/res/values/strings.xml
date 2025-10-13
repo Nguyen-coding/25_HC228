@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Application4</string>
+    <string name="btn_up">Up</string>
+    <string name="btn_down">Down</string>
+    <string name="btn_left">Left</string>
+    <string name="btn_right">Right</string>
+    <string name="leg1">단차\n극복</string>
+    <string name="leg2">앉기</string>
+    <string name="leg3">서기</string>
+    <string name="leg4">보행1</string>
+    <string name="All">보행\n정지</string>
+    <string name="Stop">Stop</string>
+    <string name="Stream">Stream</string>
+    <string name="Torque">Torque</string>
+    <string name="Angle">보행2</string>
+
+</resources>
