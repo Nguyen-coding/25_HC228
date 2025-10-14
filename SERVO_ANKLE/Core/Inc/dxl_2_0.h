@@ -1,8 +1,6 @@
 /*
  * dlx_2_0.h
  *
- *  Created on: Apr 17, 2025
- *      Author: jhfjf
  */
 
 #ifndef INC_DXL_2_0_H_
