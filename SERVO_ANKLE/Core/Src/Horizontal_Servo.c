@@ -1,8 +1,6 @@
 /*
  * Vertical_Servo.c
  *
- *  Created on: Apr 14, 2025
- *      Author: jhfjf
  */
 #include <stdint.h>
 #include "main.h"
