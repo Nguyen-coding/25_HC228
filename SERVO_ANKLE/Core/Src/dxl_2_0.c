@@ -1,8 +1,6 @@
 /*
  * dxl_2_0.c
  *
- *  Created on: Apr 15, 2025
- *      Author: jhfjf
  */
 #include "main.h"
 #include "dxl_2_0.h"
