@@ -1,8 +1,6 @@
 /*
  * Vertical_Servo.h
  *
- *  Created on: Apr 14, 2025
- *      Author: jhfjf
  */
 
 #ifndef INC_HORIZONTAL_SERVO_H_
